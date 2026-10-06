@@ -70,7 +70,7 @@ const HomePage = () => {
       {/* Metrics Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500">
+          <p className="text-sm font-medium text-gray-600">
             Total Laporan
           </p>
           <p className="text-2xl font-bold text-gray-800 mt-1">
@@ -79,7 +79,7 @@ const HomePage = () => {
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-red-500">
+          <p className="text-sm font-medium text-red-600">
             Barang Hilang
           </p>
           <p className="text-2xl font-bold text-red-600 mt-1">
@@ -88,19 +88,19 @@ const HomePage = () => {
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-green-500">
+          <p className="text-sm font-medium text-green-700">
             Barang Ditemukan
           </p>
-          <p className="text-2xl font-bold text-green-600 mt-1">
+          <p className="text-2xl font-bold text-green-700 mt-1">
             {foundCount}
           </p>
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-blue-500">
+          <p className="text-sm font-medium text-blue-700">
             Selesai
           </p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">
+          <p className="text-2xl font-bold text-blue-700 mt-1">
             {completedCount}
           </p>
         </div>
@@ -153,7 +153,7 @@ const HomePage = () => {
 
         <div className="relative w-full md:w-64">
           <FiSearch
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4"
             aria-hidden="true"
           />
 
@@ -172,7 +172,7 @@ const HomePage = () => {
       {/* Reports Grid/List */}
       {isLostFound ? (
         <div
-          className="text-center py-12 text-gray-500"
+          className="text-center py-12 text-gray-600"
           role="status"
           aria-live="polite"
         >
@@ -186,7 +186,7 @@ const HomePage = () => {
           {error}
         </div>
       ) : filteredData.length === 0 ? (
-        <div className="text-center py-12 text-gray-500 bg-white rounded-xl border border-dashed">
+        <div className="text-center py-12 text-gray-600 bg-white rounded-xl border border-dashed">
           Tidak ada laporan yang sesuai.
         </div>
       ) : (
@@ -208,7 +208,7 @@ const HomePage = () => {
                   />
                 ) : (
                   <div
-                    className="w-full h-full flex items-center justify-center text-gray-400"
+                    className="w-full h-full flex items-center justify-center text-gray-600"
                     role="img"
                     aria-label="Tidak ada foto laporan"
                   >
@@ -220,23 +220,15 @@ const HomePage = () => {
                   <span
                     className={`px-2.5 py-1 text-xs font-semibold rounded-full uppercase ${
                       item.status === 'lost'
-                        ? 'bg-red-500 text-white'
-                        : 'bg-green-500 text-white'
-                    }`}
-                    aria-label={`Status laporan: ${
-                      item.status === 'lost'
-                        ? 'barang hilang'
-                        : 'barang ditemukan'
+                        ? 'bg-red-600 text-white'
+                        : 'bg-green-700 text-white'
                     }`}
                   >
                     {item.status}
                   </span>
 
                   {item.is_completed ? (
-                    <span
-                      className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-500 text-white"
-                      aria-label="Status laporan: selesai"
-                    >
+                    <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-700 text-white">
                       Selesai
                     </span>
                   ) : null}
@@ -255,7 +247,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-gray-600">
                     {formatDate(item.created_at)}
                   </span>
 
