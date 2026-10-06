@@ -91,7 +91,7 @@ const HomePage = () => {
           <p className="text-sm font-medium text-green-700">
             Barang Ditemukan
           </p>
-          <p className="text-2xl font-bold text-green-700 mt-1">
+          <p className="text-2xl font-bold text-green-600 mt-1">
             {foundCount}
           </p>
         </div>
@@ -100,7 +100,7 @@ const HomePage = () => {
           <p className="text-sm font-medium text-blue-700">
             Selesai
           </p>
-          <p className="text-2xl font-bold text-blue-700 mt-1">
+          <p className="text-2xl font-bold text-blue-600 mt-1">
             {completedCount}
           </p>
         </div>
@@ -228,7 +228,9 @@ const HomePage = () => {
                   </span>
 
                   {item.is_completed ? (
-                    <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-700 text-white">
+                    <span
+                      className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-700 text-white"
+                    >
                       Selesai
                     </span>
                   ) : null}
