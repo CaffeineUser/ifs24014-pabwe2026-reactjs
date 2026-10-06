@@ -8,7 +8,9 @@ import { FiPlus, FiSearch } from 'react-icons/fi';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const { lostFounds, isLostFound, error } = useSelector((state) => state.lostFounds);
+  const { lostFounds, isLostFound, error } = useSelector(
+    (state) => state.lostFounds
+  );
 
   const [filterStatus, setFilterStatus] = useState('');
   const [filterCompleted, setFilterCompleted] = useState('');
@@ -34,9 +36,15 @@ const HomePage = () => {
   });
 
   const totalCount = lostFounds.length;
-  const lostCount = lostFounds.filter((item) => item.status === 'lost').length;
-  const foundCount = lostFounds.filter((item) => item.status === 'found').length;
-  const completedCount = lostFounds.filter((item) => item.is_completed).length;
+  const lostCount = lostFounds.filter(
+    (item) => item.status === 'lost'
+  ).length;
+  const foundCount = lostFounds.filter(
+    (item) => item.status === 'found'
+  ).length;
+  const completedCount = lostFounds.filter(
+    (item) => item.is_completed
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -51,7 +59,10 @@ const HomePage = () => {
           onClick={() => setIsAddModalOpen(true)}
           className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
         >
-          <FiPlus className="w-5 h-5" aria-hidden="true" />
+          <FiPlus
+            className="w-5 h-5"
+            aria-hidden="true"
+          />
           <span>Tambah Laporan</span>
         </button>
       </div>
@@ -59,24 +70,36 @@ const HomePage = () => {
       {/* Metrics Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500">Total Laporan</p>
-          <p className="text-2xl font-bold text-gray-800 mt-1">{totalCount}</p>
+          <p className="text-sm font-medium text-gray-500">
+            Total Laporan
+          </p>
+          <p className="text-2xl font-bold text-gray-800 mt-1">
+            {totalCount}
+          </p>
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-red-500">Barang Hilang</p>
-          <p className="text-2xl font-bold text-red-600 mt-1">{lostCount}</p>
+          <p className="text-sm font-medium text-red-500">
+            Barang Hilang
+          </p>
+          <p className="text-2xl font-bold text-red-600 mt-1">
+            {lostCount}
+          </p>
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <p className="text-sm font-medium text-green-500">
             Barang Ditemukan
           </p>
-          <p className="text-2xl font-bold text-green-600 mt-1">{foundCount}</p>
+          <p className="text-2xl font-bold text-green-600 mt-1">
+            {foundCount}
+          </p>
         </div>
 
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-blue-500">Selesai</p>
+          <p className="text-sm font-medium text-blue-500">
+            Selesai
+          </p>
           <p className="text-2xl font-bold text-blue-600 mt-1">
             {completedCount}
           </p>
@@ -87,6 +110,7 @@ const HomePage = () => {
       <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="flex flex-wrap gap-2 w-full md:w-auto">
           <select
+            name="filter-status"
             aria-label="Filter jenis laporan"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
@@ -98,6 +122,7 @@ const HomePage = () => {
           </select>
 
           <select
+            name="filter-completed"
             aria-label="Filter status laporan"
             value={filterCompleted}
             onChange={(e) => setFilterCompleted(e.target.value)}
@@ -114,9 +139,12 @@ const HomePage = () => {
           >
             <input
               id="filter-my-reports"
+              name="filter-my-reports"
               type="checkbox"
               checked={!!filterMe}
-              onChange={(e) => setFilterMe(e.target.checked ? '1' : '')}
+              onChange={(e) =>
+                setFilterMe(e.target.checked ? '1' : '')
+              }
               className="rounded text-blue-600 focus:ring-blue-500"
             />
             <span>Milik Saya</span>
@@ -130,7 +158,8 @@ const HomePage = () => {
           />
 
           <input
-            type="text"
+            type="search"
+            name="search"
             aria-label="Cari laporan lost and found"
             placeholder="Cari laporan..."
             value={searchTerm}
@@ -163,7 +192,7 @@ const HomePage = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredData.map((item) => (
-            <div
+            <article
               key={item.id}
               className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col"
             >
@@ -171,11 +200,18 @@ const HomePage = () => {
                 {item.cover ? (
                   <img
                     src={item.cover}
-                    alt={item.title || 'Foto laporan lost and found'}
+                    alt={
+                      item.title ||
+                      'Foto laporan lost and found'
+                    }
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  <div
+                    className="w-full h-full flex items-center justify-center text-gray-400"
+                    role="img"
+                    aria-label="Tidak ada foto laporan"
+                  >
                     Tidak Ada Foto
                   </div>
                 )}
@@ -187,12 +223,20 @@ const HomePage = () => {
                         ? 'bg-red-500 text-white'
                         : 'bg-green-500 text-white'
                     }`}
+                    aria-label={`Status laporan: ${
+                      item.status === 'lost'
+                        ? 'barang hilang'
+                        : 'barang ditemukan'
+                    }`}
                   >
                     {item.status}
                   </span>
 
                   {item.is_completed ? (
-                    <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-500 text-white">
+                    <span
+                      className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-500 text-white"
+                      aria-label="Status laporan: selesai"
+                    >
                       Selesai
                     </span>
                   ) : null}
@@ -217,13 +261,14 @@ const HomePage = () => {
 
                   <Link
                     to={`/lost-founds/${item.id}`}
+                    aria-label={`Lihat detail laporan ${item.title || ''}`}
                     className="text-sm font-medium text-blue-600 hover:text-blue-700"
                   >
                     Detail &rarr;
                   </Link>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       )}

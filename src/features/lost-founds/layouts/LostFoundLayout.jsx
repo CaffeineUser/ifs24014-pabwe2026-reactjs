@@ -24,9 +24,14 @@ const LostFoundLayout = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <NavbarComponent />
+
       <div className="flex flex-1">
         <SidebarComponent />
-        <main className="flex-1 p-6">
+
+        <main
+          className="flex-1 p-6"
+          id="main-content"
+        >
           <Outlet />
         </main>
       </div>

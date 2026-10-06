@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLostFoundAsync } from '../states/lostFoundSlice';
-import { showErrorDialog, showSuccessDialog } from '../../../helpers/toolsHelper';
+import {
+  showErrorDialog,
+  showSuccessDialog,
+} from '../../../helpers/toolsHelper';
 
 const ChangeModal = ({ isOpen, onClose, data }) => {
   const dispatch = useDispatch();
-  const { isLostFoundChange } = useSelector((state) => state.lostFounds);
+  const { isLostFoundChange } = useSelector(
+    (state) => state.lostFounds
+  );
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -25,8 +30,12 @@ const ChangeModal = ({ isOpen, onClose, data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!title || !description) {
-      return showErrorDialog('Error', 'Judul dan deskripsi harus diisi');
+      return showErrorDialog(
+        'Error',
+        'Judul dan deskripsi harus diisi'
+      );
     }
 
     const res = await dispatch(
@@ -40,7 +49,10 @@ const ChangeModal = ({ isOpen, onClose, data }) => {
     );
 
     if (updateLostFoundAsync.fulfilled.match(res)) {
-      showSuccessDialog('Sukses', 'Laporan berhasil diperbarui');
+      showSuccessDialog(
+        'Sukses',
+        'Laporan berhasil diperbarui'
+      );
       onClose();
     } else {
       showErrorDialog('Gagal', res.payload);
@@ -48,13 +60,38 @@ const ChangeModal = ({ isOpen, onClose, data }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Ubah Laporan</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+      role="presentation"
+    >
+      <div
+        className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="change-lost-found-title"
+      >
+        <h2
+          id="change-lost-found-title"
+          className="text-xl font-bold mb-4 text-gray-800"
+        >
+          Ubah Laporan
+        </h2>
+
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Judul</label>
+            <label
+              htmlFor="change-lost-found-title-input"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Judul
+            </label>
+
             <input
+              id="change-lost-found-title-input"
+              name="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -62,23 +99,47 @@ const ChangeModal = ({ isOpen, onClose, data }) => {
               disabled={isLostFoundChange}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Jenis Laporan</label>
+            <label
+              htmlFor="change-lost-found-status"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Jenis Laporan
+            </label>
+
             <select
+              id="change-lost-found-status"
+              name="status"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               disabled={isLostFoundChange}
             >
-              <option value="lost">Lost (Kehilangan)</option>
-              <option value="found">Found (Penemuan)</option>
+              <option value="lost">
+                Lost (Kehilangan)
+              </option>
+              <option value="found">
+                Found (Penemuan)
+              </option>
             </select>
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status Selesai</label>
+            <label
+              htmlFor="change-lost-found-completed"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Status Selesai
+            </label>
+
             <select
+              id="change-lost-found-completed"
+              name="isCompleted"
               value={isCompleted}
-              onChange={(e) => setIsCompleted(Number(e.target.value))}
+              onChange={(e) =>
+                setIsCompleted(Number(e.target.value))
+              }
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               disabled={isLostFoundChange}
             >
@@ -86,16 +147,28 @@ const ChangeModal = ({ isOpen, onClose, data }) => {
               <option value={1}>Selesai</option>
             </select>
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+            <label
+              htmlFor="change-lost-found-description"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Deskripsi
+            </label>
+
             <textarea
+              id="change-lost-found-description"
+              name="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) =>
+                setDescription(e.target.value)
+              }
               rows="4"
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               disabled={isLostFoundChange}
             />
           </div>
+
           <div className="flex justify-end space-x-3 pt-2">
             <button
               type="button"
@@ -105,12 +178,16 @@ const ChangeModal = ({ isOpen, onClose, data }) => {
             >
               Batal
             </button>
+
             <button
               type="submit"
               disabled={isLostFoundChange}
+              aria-busy={isLostFoundChange}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium disabled:opacity-50"
             >
-              {isLostFoundChange ? 'Menyimpan...' : 'Simpan Perubahan'}
+              {isLostFoundChange
+                ? 'Menyimpan...'
+                : 'Simpan Perubahan'}
             </button>
           </div>
         </form>

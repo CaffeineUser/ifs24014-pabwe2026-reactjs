@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAsync, resetAuthState } from '../states/authSlice';
 import useInput from '../../../hooks/useInput';
-import { showErrorDialog, showSuccessDialog } from '../../../helpers/toolsHelper';
+import {
+  showErrorDialog,
+  showSuccessDialog,
+} from '../../../helpers/toolsHelper';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -21,7 +24,10 @@ const LoginPage = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      showErrorDialog('Validation Error', 'Email and password are required');
+      showErrorDialog(
+        'Validation Error',
+        'Email and password are required'
+      );
       return;
     }
 
@@ -41,7 +47,11 @@ const LoginPage = () => {
         Sign In to Your Account
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4" id="login-form">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4"
+        id="login-form"
+      >
         <div>
           <label
             htmlFor="login-email-input"
@@ -49,6 +59,7 @@ const LoginPage = () => {
           >
             Email
           </label>
+
           <input
             id="login-email-input"
             name="email"
@@ -59,6 +70,7 @@ const LoginPage = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
             placeholder="Enter your email"
             disabled={isAuthLogin}
+            aria-required="true"
           />
         </div>
 
@@ -69,6 +81,7 @@ const LoginPage = () => {
           >
             Password
           </label>
+
           <input
             id="login-password-input"
             name="password"
@@ -79,6 +92,7 @@ const LoginPage = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
             placeholder="Enter your password"
             disabled={isAuthLogin}
+            aria-required="true"
           />
         </div>
 
@@ -86,6 +100,7 @@ const LoginPage = () => {
           id="login-submit-button"
           type="submit"
           disabled={isAuthLogin}
+          aria-busy={isAuthLogin}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
         >
           {isAuthLogin ? 'Signing In...' : 'Sign In'}
