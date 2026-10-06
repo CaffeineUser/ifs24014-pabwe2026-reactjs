@@ -41,12 +41,17 @@ const HomePage = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-gray-800">Daftar Laporan Lost & Found</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          Daftar Laporan Lost & Found
+        </h1>
+
         <button
+          type="button"
+          aria-label="Tambah laporan lost and found"
           onClick={() => setIsAddModalOpen(true)}
           className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
         >
-          <FiPlus className="w-5 h-5" />
+          <FiPlus className="w-5 h-5" aria-hidden="true" />
           <span>Tambah Laporan</span>
         </button>
       </div>
@@ -57,17 +62,24 @@ const HomePage = () => {
           <p className="text-sm font-medium text-gray-500">Total Laporan</p>
           <p className="text-2xl font-bold text-gray-800 mt-1">{totalCount}</p>
         </div>
+
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <p className="text-sm font-medium text-red-500">Barang Hilang</p>
           <p className="text-2xl font-bold text-red-600 mt-1">{lostCount}</p>
         </div>
+
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-green-500">Barang Ditemukan</p>
+          <p className="text-sm font-medium text-green-500">
+            Barang Ditemukan
+          </p>
           <p className="text-2xl font-bold text-green-600 mt-1">{foundCount}</p>
         </div>
+
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <p className="text-sm font-medium text-blue-500">Selesai</p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">{completedCount}</p>
+          <p className="text-2xl font-bold text-blue-600 mt-1">
+            {completedCount}
+          </p>
         </div>
       </div>
 
@@ -75,6 +87,7 @@ const HomePage = () => {
       <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="flex flex-wrap gap-2 w-full md:w-auto">
           <select
+            aria-label="Filter jenis laporan"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
             className="px-3 py-2 border rounded-lg text-sm bg-white"
@@ -85,6 +98,7 @@ const HomePage = () => {
           </select>
 
           <select
+            aria-label="Filter status laporan"
             value={filterCompleted}
             onChange={(e) => setFilterCompleted(e.target.value)}
             className="px-3 py-2 border rounded-lg text-sm bg-white"
@@ -94,8 +108,12 @@ const HomePage = () => {
             <option value="0">Belum Selesai</option>
           </select>
 
-          <label className="flex items-center space-x-2 text-sm text-gray-600 border px-3 py-2 rounded-lg cursor-pointer bg-white">
+          <label
+            htmlFor="filter-my-reports"
+            className="flex items-center space-x-2 text-sm text-gray-600 border px-3 py-2 rounded-lg cursor-pointer bg-white"
+          >
             <input
+              id="filter-my-reports"
               type="checkbox"
               checked={!!filterMe}
               onChange={(e) => setFilterMe(e.target.checked ? '1' : '')}
@@ -106,9 +124,14 @@ const HomePage = () => {
         </div>
 
         <div className="relative w-full md:w-64">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <FiSearch
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"
+            aria-hidden="true"
+          />
+
           <input
             type="text"
+            aria-label="Cari laporan lost and found"
             placeholder="Cari laporan..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -119,9 +142,20 @@ const HomePage = () => {
 
       {/* Reports Grid/List */}
       {isLostFound ? (
-        <div className="text-center py-12 text-gray-500">Memuat laporan...</div>
+        <div
+          className="text-center py-12 text-gray-500"
+          role="status"
+          aria-live="polite"
+        >
+          Memuat laporan...
+        </div>
       ) : error ? (
-        <div className="p-4 bg-red-100 text-red-700 rounded-lg">{error}</div>
+        <div
+          className="p-4 bg-red-100 text-red-700 rounded-lg"
+          role="alert"
+        >
+          {error}
+        </div>
       ) : filteredData.length === 0 ? (
         <div className="text-center py-12 text-gray-500 bg-white rounded-xl border border-dashed">
           Tidak ada laporan yang sesuai.
@@ -129,21 +163,34 @@ const HomePage = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredData.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+            <div
+              key={item.id}
+              className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col"
+            >
               <div className="h-48 bg-gray-100 relative">
                 {item.cover ? (
-                  <img src={item.cover} alt={item.title} className="w-full h-full object-cover" />
+                  <img
+                    src={item.cover}
+                    alt={item.title || 'Foto laporan lost and found'}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">Tidak Ada Foto</div>
+                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                    Tidak Ada Foto
+                  </div>
                 )}
+
                 <div className="absolute top-3 left-3 flex gap-2">
                   <span
                     className={`px-2.5 py-1 text-xs font-semibold rounded-full uppercase ${
-                      item.status === 'lost' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+                      item.status === 'lost'
+                        ? 'bg-red-500 text-white'
+                        : 'bg-green-500 text-white'
                     }`}
                   >
                     {item.status}
                   </span>
+
                   {item.is_completed ? (
                     <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-500 text-white">
                       Selesai
@@ -151,13 +198,23 @@ const HomePage = () => {
                   ) : null}
                 </div>
               </div>
+
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-lg text-gray-800 line-clamp-1">{item.title}</h3>
-                  <p className="text-gray-600 text-sm mt-2 line-clamp-2">{item.description}</p>
+                  <h2 className="font-bold text-lg text-gray-800 line-clamp-1">
+                    {item.title}
+                  </h2>
+
+                  <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+                    {item.description}
+                  </p>
                 </div>
+
                 <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">{formatDate(item.created_at)}</span>
+                  <span className="text-xs text-gray-400">
+                    {formatDate(item.created_at)}
+                  </span>
+
                   <Link
                     to={`/lost-founds/${item.id}`}
                     className="text-sm font-medium text-blue-600 hover:text-blue-700"
@@ -171,7 +228,10 @@ const HomePage = () => {
         </div>
       )}
 
-      <AddModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
+      <AddModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
     </div>
   );
 };
