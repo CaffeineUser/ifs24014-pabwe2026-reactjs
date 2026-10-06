@@ -1,4 +1,3 @@
-```jsx
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,8 +8,8 @@ import { showErrorDialog, showSuccessDialog } from '../../../helpers/toolsHelper
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthLogin, error } = useSelector((state) => state.auth);
-  
+  const { isAuthLogin } = useSelector((state) => state.auth);
+
   const [email, onEmailChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
 
@@ -20,15 +19,17 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!email || !password) {
       showErrorDialog('Validation Error', 'Email and password are required');
       return;
     }
 
     const action = await dispatch(loginAsync({ email, password }));
+
     if (loginAsync.fulfilled.match(action)) {
       showSuccessDialog('Login Success', 'Welcome back!');
-      navigate('/');
+      navigate('/', { replace: true });
     } else {
       showErrorDialog('Login Failed', action.payload);
     }
@@ -43,16 +44,16 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit} className="space-y-4" id="login-form">
         <div>
           <label
-            htmlFor="email"
+            htmlFor="login-email-input"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
             Email
           </label>
-
           <input
             id="login-email-input"
             name="email"
             type="email"
+            autoComplete="email"
             value={email}
             onChange={onEmailChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
@@ -63,16 +64,16 @@ const LoginPage = () => {
 
         <div>
           <label
-            htmlFor="password"
+            htmlFor="login-password-input"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
             Password
           </label>
-
           <input
             id="login-password-input"
             name="password"
             type="password"
+            autoComplete="current-password"
             value={password}
             onChange={onPasswordChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
@@ -105,4 +106,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-```
