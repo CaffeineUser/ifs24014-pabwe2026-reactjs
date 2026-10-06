@@ -1,3 +1,4 @@
+```jsx
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -35,11 +36,22 @@ const LoginPage = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">Sign In to Your Account</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
+        Sign In to Your Account
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-4" id="login-form">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Email
+          </label>
+
           <input
+            id="email"
+            name="email"
             type="email"
             value={email}
             onChange={onEmailChange}
@@ -48,9 +60,18 @@ const LoginPage = () => {
             disabled={isAuthLogin}
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Password
+          </label>
+
           <input
+            id="password"
+            name="password"
             type="password"
             value={password}
             onChange={onPasswordChange}
@@ -59,7 +80,9 @@ const LoginPage = () => {
             disabled={isAuthLogin}
           />
         </div>
+
         <button
+          id="login"
           type="submit"
           disabled={isAuthLogin}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
@@ -67,9 +90,13 @@ const LoginPage = () => {
           {isAuthLogin ? 'Signing In...' : 'Sign In'}
         </button>
       </form>
+
       <p className="mt-6 text-center text-sm text-gray-600">
         Don't have an account?{' '}
-        <Link to="/auth/register" className="text-blue-600 hover:text-blue-700 font-medium">
+        <Link
+          to="/auth/register"
+          className="text-blue-600 hover:text-blue-700 font-medium"
+        >
           Sign up
         </Link>
       </p>
@@ -78,3 +105,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+```
