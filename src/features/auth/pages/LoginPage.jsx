@@ -50,7 +50,7 @@ const LoginPage = () => {
           </label>
 
           <input
-            id="email"
+            id="login-email-input"
             name="email"
             type="email"
             value={email}
@@ -70,7 +70,7 @@ const LoginPage = () => {
           </label>
 
           <input
-            id="password"
+            id="login-password-input"
             name="password"
             type="password"
             value={password}
@@ -82,7 +82,7 @@ const LoginPage = () => {
         </div>
 
         <button
-          id="login"
+          id="login-submit-button"
           type="submit"
           disabled={isAuthLogin}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
