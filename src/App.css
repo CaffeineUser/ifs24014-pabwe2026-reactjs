@@ -2,11 +2,15 @@
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
-  color: var(--accent);
+  color: #7e22ce; /* kontras ±6.1:1 di atas --accent-bg (sebelumnya var(--accent) ±3.8:1) */
   background: var(--accent-bg);
   border: 2px solid transparent;
   transition: border-color 0.3s;
   margin-bottom: 24px;
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--accent); /* mode gelap sudah lolos (±5.4:1) */
+  }
 
   &:hover {
     border-color: var(--accent-border);
