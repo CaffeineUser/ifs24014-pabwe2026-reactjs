@@ -18,3 +18,7 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Testing
 
 Run the test suite with `bun run test`, or run it once with V8 coverage using `bun run test:coverage`. Coverage is provided by `@vitest/coverage-v8`.
+
+## Deployment
+
+Set `VITE_DELCOM_BASEURL` to the backend API URL in the deployment environment before building. `APP_HOST` and `APP_PORT` configure the local Vite development server; they do not assign a public website domain. Configure `ifs24014-pabwe2026-reactjs.s1if.cloud` as the site's domain in the hosting platform and point its DNS to that platform. `APP_URL` and `ASSET_URL` from a backend environment are not needed by this Vite frontend.

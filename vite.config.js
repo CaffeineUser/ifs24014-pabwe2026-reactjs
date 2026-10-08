@@ -5,13 +5,22 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const portValue = env.APP_PORT === 'undefined' ? env.PORT : env.APP_PORT || env.PORT;
+  const parsedPort = Number(portValue);
+  const port = Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535
+    ? parsedPort
+    : 5173;
+
   return {
     plugins: [react(), tailwindcss()],
     server: {
-      port: env.APP_PORT ? parseInt(env.APP_PORT) : 5173,
+      host: env.APP_HOST || 'localhost',
+      port,
     },
     define: {
-      'DELCOM_BASEURL': JSON.stringify(env.DELCOM_BASEURL || 'https://open-api.delcom.org/api/v1')
+      'DELCOM_BASEURL': JSON.stringify(
+        env.VITE_DELCOM_BASEURL || env.DELCOM_BASEURL || 'https://open-api.delcom.org/api/v1'
+      )
     },
     test: {
       environment: 'jsdom',
