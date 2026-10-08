@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: './src/setupTests.js',
       coverage: {
+        provider: 'v8',
         include: ['src/**/*.{js,jsx}'],
         exclude: [
           'src/main.jsx',
