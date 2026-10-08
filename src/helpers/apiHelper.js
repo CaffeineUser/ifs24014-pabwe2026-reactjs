@@ -29,21 +29,17 @@ export const apiHelper = async (endpoint, options = {}) => {
   }
 
   const config = {
+    ...options,
     method: options.method || 'GET',
     headers,
-    ...options,
   };
 
-  try {
-    const response = await fetch(url, config);
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.message || 'Something went wrong');
-    }
-    
-    return data;
-  } catch (error) {
-    throw error;
+  const response = await fetch(url, config);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Something went wrong');
   }
+
+  return data;
 };

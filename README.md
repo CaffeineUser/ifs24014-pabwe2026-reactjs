@@ -17,7 +17,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ## Testing
 
-Run the test suite with `bun run test`, or run it once with V8 coverage using `bun run test:coverage`. Coverage is provided by `@vitest/coverage-v8`.
+Run the test suite with `bun run test`, or run it once with V8 coverage using `bun run test:coverage`. Coverage is provided by `@vitest/coverage-v8` and includes all application JavaScript/JSX under `src` (excluding the bootstrap entry point and test files). The command prints a text summary and writes an HTML report to `coverage/`.
 
 ## Deployment
 

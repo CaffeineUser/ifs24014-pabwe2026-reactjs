@@ -26,6 +26,14 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: './src/setupTests.js',
       coverage: {
+        include: ['src/**/*.{js,jsx}'],
+        exclude: [
+          'src/main.jsx',
+          'src/setupTests.js',
+          'src/test/**',
+          'src/**/*.test.{js,jsx}',
+        ],
+        reporter: ['text', 'html'],
         thresholds: {
           lines: 70,
           functions: 70,
