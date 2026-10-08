@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
           'src/test/**',
           'src/**/*.test.{js,jsx}',
         ],
-        reporter: ['text', 'html'],
+        reporter: ['text', 'html','lcov'],
         thresholds: {
           lines: 70,
           functions: 70,
