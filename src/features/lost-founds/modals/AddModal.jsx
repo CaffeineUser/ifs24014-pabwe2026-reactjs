@@ -23,34 +23,25 @@ const AddModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const trimmedTitle = title.trim();
-    const trimmedDescription = description.trim();
-
-    if (!trimmedTitle || !trimmedDescription) {
+    if (!title || !description) {
       return showErrorDialog(
         'Error',
         'Judul dan deskripsi harus diisi'
       );
     }
 
-    return dispatch(
+    const res = await dispatch(
       addLostFoundAsync({
-        title: trimmedTitle,
-        description: trimmedDescription,
+        title,
+        description,
         status,
       })
-    ).then((action) => {
-      if (!addLostFoundAsync.fulfilled.match(action)) {
-        showErrorDialog(
-          'Gagal',
-          action.payload || action.error.message
-        );
-        return;
-      }
+    );
 
+    if (addLostFoundAsync.fulfilled.match(res)) {
       showSuccessDialog(
         'Sukses',
         'Laporan berhasil ditambahkan'
@@ -60,7 +51,9 @@ const AddModal = ({ isOpen, onClose }) => {
       setStatus('lost');
       dispatch(getLostFoundsAsync({}));
       onClose();
-    });
+    } else {
+      showErrorDialog('Gagal', res.payload);
+    }
   };
 
   return (
@@ -102,7 +95,6 @@ const AddModal = ({ isOpen, onClose }) => {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="Contoh: Dompet Hitam Hilang"
               disabled={isLostFoundAdd}
-              aria-required="true"
             />
           </div>
 
@@ -148,7 +140,6 @@ const AddModal = ({ isOpen, onClose }) => {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="Jelaskan rincian barang, lokasi, dan waktu..."
               disabled={isLostFoundAdd}
-              aria-required="true"
             />
           </div>
 
