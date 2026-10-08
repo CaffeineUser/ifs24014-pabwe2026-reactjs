@@ -20,7 +20,7 @@ const LoginPage = () => {
     dispatch(resetAuthState());
   }, [dispatch]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -31,14 +31,14 @@ const LoginPage = () => {
       return;
     }
 
-    const action = await dispatch(loginAsync({ email, password }));
-
-    if (loginAsync.fulfilled.match(action)) {
-      showSuccessDialog('Login Success', 'Welcome back!');
-      navigate('/', { replace: true });
-    } else {
-      showErrorDialog('Login Failed', action.payload);
-    }
+    return dispatch(loginAsync({ email, password })).then((action) => {
+      if (loginAsync.fulfilled.match(action)) {
+        showSuccessDialog('Login Success', 'Welcome back!');
+        navigate('/', { replace: true });
+      } else {
+        showErrorDialog('Login Failed', action.payload);
+      }
+    });
   };
 
   return (
